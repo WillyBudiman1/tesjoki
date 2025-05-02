@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Jasa Joki Game</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f9f9f9;
+      margin: 0;
+      padding: 20px;
+    }
+    h1, h2 {
+      text-align: center;
+    }
+    .game-section {
+      background: #fff;
+      border-radius: 10px;
+      padding: 20px;
+      margin: 20px auto;
+      max-width: 500px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    select, button {
+      width: 100%;
+      padding: 10px;
+      margin-top: 10px;
+      font-size: 16px;
+    }
+    button {
+      background-color: #25D366;
+      color: white;
+      border: none;
+      cursor: pointer;
+      border-radius: 5px;
+    }
+    button:hover {
+      background-color: #1ebc59;
+    }
+    .price-display {
+      margin-top: 10px;
+      font-weight: bold;
+      color: #388e3c;
+      text-align: center;
+    }
+    .sub-select {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Jasa Joki Game</h1>
+
+  <div class="game-section">
+    <h2>Genshin Impact</h2>
+    <select id="genshinSelect" onchange="handleGenshinChange()">
+      <option value="">Pilih Jasa</option>
+      <option value="spiralAbyss">Joki Spiral Abyss</option>
+      <option value="rawatAkun">Joki Rawat Akun</option>
+      <option value="theCatch">Joki The Catch</option>
+      <option value="ferryman">Joki Fleuve Cendre Ferryman</option>
+      <option value="Joki Aranyaka|Rp 90.000 (quest lengkap)">Joki Aranyaka</option>
+    </select>
+
+    <!-- Spiral Abyss -->
+    <select id="floorSelect" class="sub-select" onchange="updatePrice(this)">
+      <option value="">Pilih Floor</option>
+      <option value="Floor 9|Rp 1.000 / Star">Floor 9</option>
+      <option value="Floor 10|Rp 1.000 / Star">Floor 10</option>
+      <option value="Floor 11|Rp 1.500 / Star">Floor 11</option>
+      <option value="Floor 12|Rp 2.000 / Star">Floor 12</option>
+    </select>
+
+    <!-- Rawat Akun -->
+    <select id="waktuSelect" class="sub-select" onchange="updatePrice(this)">
+      <option value="">Pilih Durasi</option>
+      <option value="Harian|Rp 15.000 per hari">Harian</option>
+      <option value="Mingguan|Rp 80.000 per minggu">Mingguan</option>
+      <option value="Bulanan|Rp 300.000 per bulan">Bulanan</option>
+    </select>
+
+    <!-- The Catch -->
+    <select id="catchSelect" class="sub-select" onchange="updatePrice(this)">
+      <option value="">Pilih Varian</option>
+      <option value="The Catch R1|Rp 50.000">The Catch R1</option>
+      <option value="Refine Only|Rp 30.000">Refine Only</option>
+      <option value="The Catch R5|Rp 200.000">The Catch R5</option>
+    </select>
+
+    <!-- Ferryman -->
+    <select id="ferrymanSelect" class="sub-select" onchange="updatePrice(this)">
+      <option value="">Pilih Varian</option>
+      <option value="Fleuve Cendre Ferryman R1| Rp 25.000">Fleuve Cendre Ferryman R1</option>
+      <option value="Refine Only|Rp 15.000">Refine Only</option>
+      <option value="Fleuve Cendre Ferryman | Rp  65.000">Fleuve Cendre Ferryman</option>
+    </select>
+
+    <div class="price-display" id="genshinPrice"></div>
+    <button onclick="orderGenshin()">Pesan via WhatsApp</button>
+  </div>
+
+  <script>
+    const phoneNumber = '6281357706121';
+
+    function handleGenshinChange() {
+      const value = document.getElementById("genshinSelect").value;
+      document.querySelectorAll('.sub-select').forEach(el => {
+        el.style.display = 'none';
+        el.value = '';
+      });
+      document.getElementById("genshinPrice").textContent = '';
+
+      if (value === "spiralAbyss") document.getElementById("floorSelect").style.display = 'block';
+      if (value === "rawatAkun") document.getElementById("waktuSelect").style.display = 'block';
+      if (value === "theCatch") document.getElementById("catchSelect").style.display = 'block';
+      if (value === "ferryman") document.getElementById("ferrymanSelect").style.display = 'block';
+    }
+
+    function updatePrice(selectElement) {
+      const value = selectElement.value;
+      const priceDiv = document.getElementById("genshinPrice");
+      if (value) {
+        const [label, price] = value.split('|');
+        priceDiv.textContent = `Harga: ${price}`;
+      } else {
+        priceDiv.textContent = '';
+      }
+    }
+
+    function orderGenshin() {
+      const main = document.getElementById("genshinSelect").value;
+      const floor = document.getElementById("floorSelect").value;
+      const waktu = document.getElementById("waktuSelect").value;
+      const catchOpt = document.getElementById("catchSelect").value;
+      const ferryman = document.getElementById("ferrymanSelect").value;
+
+      let service = '', detail = '', price = '';
+
+      if (!main) {
+        alert("Silakan pilih jasa terlebih dahulu.");
+        return;
+      }
+
+      if (main === 'spiralAbyss' && floor) {
+        [detail, price] = floor.split('|');
+        service = `Joki Spiral Abyss - ${detail}`;
+      } else if (main === 'rawatAkun' && waktu) {
+        [detail, price] = waktu.split('|');
+        service = `Joki Rawat Akun - ${detail}`;
+      } else if (main === 'theCatch' && catchOpt) {
+        [detail, price] = catchOpt.split('|');
+        service = `Joki The Catch - ${detail}`;
+      } else if (main === 'ferryman' && ferryman) {
+        [detail, price] = ferryman.split('|');
+        service = `Joki Fleuve Cendre Ferryman - ${detail}`;
+      } else if (main.includes('|')) {
+        [service, price] = main.split('|');
+      } else {
+        alert("Silakan lengkapi pilihan sub-menu.");
+        return;
+      }
+
+      const msg = `Halo, saya ingin pesan jasa joki untuk *Genshin Impact*.\nLayanan: *${service}*\nHarga: ${price}`;
+      const url = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(msg)}`;
+      window.open(url, '_blank');
+    }
+  </script>
+</body>
+</html>
