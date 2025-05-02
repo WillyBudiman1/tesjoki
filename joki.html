@@ -61,7 +61,9 @@
       <option value="rawatAkun">Joki Rawat Akun</option>
       <option value="theCatch">Joki The Catch</option>
       <option value="ferryman">Joki Fleuve Cendre Ferryman</option>
-      <option value="Joki Aranyaka|Rp 90.000 (quest lengkap)">Joki Aranyaka</option>
+      <option value="aranyaka">Joki Aranyaka</option>
+      <option value="aranara">Joki 76 Aranara</option>
+      <option value="imaginarium">Joki Imaginarium Theater</option>
     </select>
 
     <!-- Spiral Abyss -->
@@ -76,25 +78,51 @@
     <!-- Rawat Akun -->
     <select id="waktuSelect" class="sub-select" onchange="updatePrice(this)">
       <option value="">Pilih Durasi</option>
-      <option value="Harian|Rp 15.000 per hari">Harian</option>
-      <option value="Mingguan|Rp 80.000 per minggu">Mingguan</option>
-      <option value="Bulanan|Rp 300.000 per bulan">Bulanan</option>
+      <option value="Harian|Rp 10.000 per hari">Harian</option>
+      <option value="Mingguan|Rp 50.000 per minggu">Mingguan</option>
+      <option value="Bulanan|Rp 150.000 per bulan">Bulanan</option>
     </select>
 
     <!-- The Catch -->
     <select id="catchSelect" class="sub-select" onchange="updatePrice(this)">
       <option value="">Pilih Varian</option>
-      <option value="The Catch R1|Rp 50.000">The Catch R1</option>
-      <option value="Refine Only|Rp 30.000">Refine Only</option>
-      <option value="The Catch R5|Rp 200.000">The Catch R5</option>
+      <option value="The Catch R1|Rp 25.000">The Catch R1</option>
+      <option value="Refine Only|Rp 15.000">Refine Only</option>
+      <option value="The Catch R5|Rp 65.000">The Catch R5</option>
     </select>
 
-    <!-- Ferryman -->
+    <!-- Fleuve Cendre Ferryman -->
     <select id="ferrymanSelect" class="sub-select" onchange="updatePrice(this)">
       <option value="">Pilih Varian</option>
-      <option value="Fleuve Cendre Ferryman R1| Rp 25.000">Fleuve Cendre Ferryman R1</option>
+      <option value="Fleuve Cendre Ferryman R1|Rp 25.000">Fleuve Cendre Ferryman R1</option>
       <option value="Refine Only|Rp 15.000">Refine Only</option>
-      <option value="Fleuve Cendre Ferryman | Rp  65.000">Fleuve Cendre Ferryman</option>
+      <option value="Fleuve Cendre Ferryman|Rp 65.000">Fleuve Cendre Ferryman</option>
+    </select>
+
+    <!-- Aranyaka -->
+    <select id="aranyakaSelect" class="sub-select" onchange="updatePrice(this)">
+      <option value="">Pilih Part</option>
+      <option value="Part 1|Rp 10.000">Part 1</option>
+      <option value="Part 2|Rp 100.000">Part 2</option>
+      <option value="Part 3|Rp 15.000">Part 3</option>
+      <option value="Part 4|Rp 15.000">Part 4</option>
+      <option value="All Parts|Rp 150.000">All Parts</option>
+    </select>
+
+    <!-- 76 Aranara -->
+    <select id="aranaraSelect" class="sub-select" onchange="updatePrice(this)">
+      <option value="">Pilih Varian</option>
+      <option value="1 Aranara|Rp 1.000">1 Aranara</option>
+      <option value="All Aranara (76 total)|Rp 76.000">All Aranara (76 total)</option>
+    </select>
+
+    <!-- Imaginarium Theater -->
+    <select id="imaginariumSelect" class="sub-select" onchange="updatePrice(this)">
+      <option value="">Pilih Mode</option>
+      <option value="Easy Mode|Rp 10.000">Easy Mode</option>
+      <option value="Normal Mode|Rp 20.000">Normal Mode</option>
+      <option value="Hard Mode|Rp 25.000">Hard Mode</option>
+      <option value="Visionary Mode|Rp 30.000">Visionary Mode</option>
     </select>
 
     <div class="price-display" id="genshinPrice"></div>
@@ -116,6 +144,9 @@
       if (value === "rawatAkun") document.getElementById("waktuSelect").style.display = 'block';
       if (value === "theCatch") document.getElementById("catchSelect").style.display = 'block';
       if (value === "ferryman") document.getElementById("ferrymanSelect").style.display = 'block';
+      if (value === "aranyaka") document.getElementById("aranyakaSelect").style.display = 'block';
+      if (value === "aranara") document.getElementById("aranaraSelect").style.display = 'block';
+      if (value === "imaginarium") document.getElementById("imaginariumSelect").style.display = 'block';
     }
 
     function updatePrice(selectElement) {
@@ -135,6 +166,9 @@
       const waktu = document.getElementById("waktuSelect").value;
       const catchOpt = document.getElementById("catchSelect").value;
       const ferryman = document.getElementById("ferrymanSelect").value;
+      const aranyaka = document.getElementById("aranyakaSelect").value;
+      const aranara = document.getElementById("aranaraSelect").value;
+      const imaginarium = document.getElementById("imaginariumSelect").value;
 
       let service = '', detail = '', price = '';
 
@@ -155,6 +189,15 @@
       } else if (main === 'ferryman' && ferryman) {
         [detail, price] = ferryman.split('|');
         service = `Joki Fleuve Cendre Ferryman - ${detail}`;
+      } else if (main === 'aranyaka' && aranyaka) {
+        [detail, price] = aranyaka.split('|');
+        service = `Joki Aranyaka - ${detail}`;
+      } else if (main === 'aranara' && aranara) {
+        [detail, price] = aranara.split('|');
+        service = `Joki 76 Aranara - ${detail}`;
+      } else if (main === 'imaginarium' && imaginarium) {
+        [detail, price] = imaginarium.split('|');
+        service = `Joki Imaginarium Theater - ${detail}`;
       } else if (main.includes('|')) {
         [service, price] = main.split('|');
       } else {
